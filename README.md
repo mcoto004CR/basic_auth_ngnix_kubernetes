@@ -31,35 +31,35 @@ Open a Linux terminal
       
  ## Step 4: create a Ingress yaml file to use your basic-auth
  
- apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: ingress-with-basic-auth
-  annotations:
-    cert-manager.io/cluster-issuer: "letsencrypt-prod" ==> If you are not using certs, this is no needed
-    kubernetes.io/ingress.class: nginx  --> This is required if you have multiple ingress, check ingress.class in Kubernetes documentation
-    # type of authentication
-    nginx.ingress.kubernetes.io/auth-type: basic
-    # name of the secret that contains the user/password definitions
-    nginx.ingress.kubernetes.io/auth-secret: basic-auth
-    # message to display with an appropriate context why the authentication is required
-    nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required - RedisInsights'
-spec:
- tls:
-  - hosts:
-    - example.test.com  ==> replace with your domain
-    secretName: ==> replace with your Cert secrect name
- rules:
-  - host: example.test.com  ==> replace with your domain
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service: 
-            name: your-service
-            port: 
-              number: 80  --> your port
+        apiVersion: networking.k8s.io/v1
+        kind: Ingress
+        metadata:
+          name: ingress-with-basic-auth
+          annotations:
+            cert-manager.io/cluster-issuer: "letsencrypt-prod" ==> If you are not using certs, this is no needed
+            kubernetes.io/ingress.class: nginx  --> This is required if you have multiple ingress, check ingress.class in Kubernetes documentation
+            # type of authentication
+            nginx.ingress.kubernetes.io/auth-type: basic
+            # name of the secret that contains the user/password definitions
+            nginx.ingress.kubernetes.io/auth-secret: basic-auth
+            # message to display with an appropriate context why the authentication is required
+            nginx.ingress.kubernetes.io/auth-realm: 'Authentication Required - RedisInsights'
+        spec:
+         tls:
+          - hosts:
+            - example.test.com  ==> replace with your domain
+            secretName: ==> replace with your Cert secrect name
+         rules:
+          - host: example.test.com  ==> replace with your domain
+            http:
+              paths:
+              - path: /
+                pathType: Prefix
+                backend:
+                  service: 
+                    name: your-service
+                    port: 
+                      number: 80  --> your port
  
 
 ## Step 5: apply your yaml ingress and check you url address.
